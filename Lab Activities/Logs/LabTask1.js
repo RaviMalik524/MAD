@@ -14,42 +14,46 @@ const DiscountCalculatorApp = () => {
   const [discountPercentage, setDiscountPercentage] = useState('');
   const [history, setHistory] = useState([]);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [calculationResult, setCalculationResult] = useState(''); // Add this state
 
   const calculateDiscount = () => {
     if (originalPrice !== '' && discountPercentage !== '') {
       const original = parseFloat(originalPrice);
       const discount = parseFloat(discountPercentage);
       const discountedPrice = original - (original * discount) / 100;
-      const saveAmount = original - discountedPrice;
-
       const calculation = `${original} - ${discount}% = ${discountedPrice.toFixed(2)}`;
 
       setHistory([...history, calculation]);
+      setCalculationResult(calculation); // Update the calculation result
     }
   };
 
   return (
     <SafeAreaView>
       <View>
-        <Text style={{marginLeft:20,paddingTop:20,fontWeight:"bold"}}>Discount Calculator App</Text>
+        <Text style={{ marginLeft: 20, paddingTop: 20, fontWeight: "bold" }}>
+          Discount Calculator App
+        </Text>
         <TextInput
           placeholder="Original Price"
           keyboardType="numeric"
           value={originalPrice}
           onChangeText={(text) => setOriginalPrice(text)}
-          style={{margin:20,padding:20,borderWidth:2}}
+          style={{ margin: 20, padding: 20, borderWidth: 2 }}
         />
         <TextInput
           placeholder="Discount Percentage"
           keyboardType="numeric"
           value={discountPercentage}
           onChangeText={(text) => setDiscountPercentage(text)}
-          style={{margin:20,padding:20,borderWidth:2}}
+          style={{ margin: 20, padding: 20, borderWidth: 2 }}
         />
-        <Text style={{marginLeft:20,paddingTop:20,fontWeight:"bold"}}></Text>
+        <Text style={{ marginLeft: 20, paddingTop: 20, fontWeight: "bold" }}>
+          {calculationResult} 
+        </Text>
         <Button title="Calculate Discount" onPress={calculateDiscount} />
-        <Text style={{marginLeft:20,paddingTop:20,fontWeight:"bold"}}></Text>
-        <Button title="View History" onPress={() => setShowHistoryModal(true)}  />
+        <Text style={{ marginLeft: 20, paddingTop: 20, fontWeight: "bold" }}></Text>
+        <Button title="View History" onPress={() => setShowHistoryModal(true)} />
 
         <Modal
           visible={showHistoryModal}
